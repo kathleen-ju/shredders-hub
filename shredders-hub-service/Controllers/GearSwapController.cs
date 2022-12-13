@@ -10,7 +10,7 @@ public class GearSwapController
     [HttpGet]
     public string Test()
     {
-        return "hello world";
+        return "whats upppp world";
     }
     
 }
