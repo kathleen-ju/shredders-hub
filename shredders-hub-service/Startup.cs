@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using shredders_hub_application;
+using shredders_hub_repositories.InMemoryRepositories;
 
 namespace shredders_hub_service
 {
@@ -18,6 +20,7 @@ namespace shredders_hub_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<IShreddersHubRepository, ShreddersHubRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,4 +7,9 @@
         <RootNamespace>shredders_hub_service</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\shredders-hub-application\shredders-hub-application.csproj" />
+      <ProjectReference Include="..\shredders-hub-repositories\shredders-hub-repositories.csproj" />
+    </ItemGroup>
+
 </Project>
