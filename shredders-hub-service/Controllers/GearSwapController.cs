@@ -12,5 +12,11 @@ public class GearSwapController
     {
         return "whats upppp world";
     }
+
+    [HttpPost]
+    public void AddItemDetails(string itemName)
+    {
+        
+    }
     
 }
