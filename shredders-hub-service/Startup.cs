@@ -30,11 +30,8 @@ namespace shredders_hub_service
 
             app.UseRouting();
             
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "item-swap");
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
             });
         }
     }
