@@ -1,15 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <RootNamespace>shredders_hub_repositories</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>shredders_hub_service</RootNamespace>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\shredders-hub-application\shredders-hub-application.csproj" />
-      <ProjectReference Include="..\shredders-hub-repositories\shredders-hub-repositories.csproj" />
     </ItemGroup>
 
 </Project>
