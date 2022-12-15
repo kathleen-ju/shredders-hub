@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using shredders_hub_application;
 using shredders_hub_repositories.InMemoryRepositories;
 
@@ -19,6 +14,15 @@ namespace shredders_hub_service
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
+            
             services.AddControllers();
             services.AddSingleton<IShreddersHubRepository, ShreddersHubRepository>();
         }
@@ -30,7 +34,8 @@ namespace shredders_hub_service
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
+            app.UseCors();
             app.UseRouting();
             
             app.UseEndpoints(endpoints => {

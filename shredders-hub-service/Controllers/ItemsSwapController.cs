@@ -9,7 +9,7 @@ namespace shredders_hub_service.Controllers
 
     public class ItemsSwapController
     {
-        private IShreddersHubRepository _shreddersHubRepository;
+        private readonly IShreddersHubRepository _shreddersHubRepository;
 
         public ItemsSwapController(IShreddersHubRepository shreddersHubRepository)
         {
