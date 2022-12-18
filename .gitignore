@@ -23,6 +23,14 @@
 **/.idea/**/modules.xml
 
 .idea
+/.idea/.idea.shredders-hub-service/.idea/aws.xml
+
+# Devops
+devops/.terraform
+devops/.terraform.lock.hcl
+devops/terraform.tfstate
+devops/terraform.tfstate.backup
+
 
 *.suo
 *.user
