@@ -4,6 +4,6 @@ namespace shredders_hub_application;
 
 public interface IShreddersHubRepository
 {
-   Task Add( ItemInfo itemInfo);
-   Task<List<ItemInfo>> GetAll();
+   Task Add( Listing listing);
+   Task<List<Listing>> GetAll();
 }

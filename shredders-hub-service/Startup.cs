@@ -1,3 +1,4 @@
+using AutoMapper;
 using shredders_hub_application;
 using shredders_hub_repositories.InMemoryRepositories;
 
@@ -22,7 +23,15 @@ namespace shredders_hub_service
                         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                     });
             });
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            var mapper = mapperConfig.CreateMapper();
             
+            services.AddSingleton(mapper);
             services.AddControllers();
             services.AddSingleton<IShreddersHubRepository, ShreddersHubRepository>();
         }

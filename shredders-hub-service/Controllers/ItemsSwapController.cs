@@ -1,6 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using shredders_hub_application;
 using shredders_hub_application.Models;
+using shredders_hub_service.models.contracts;
 
 namespace shredders_hub_service.Controllers
 {
@@ -10,22 +12,26 @@ namespace shredders_hub_service.Controllers
     public class ItemsSwapController
     {
         private readonly IShreddersHubRepository _shreddersHubRepository;
+        private readonly IMapper _mapper;
 
-        public ItemsSwapController(IShreddersHubRepository shreddersHubRepository)
+        public ItemsSwapController(IShreddersHubRepository shreddersHubRepository, IMapper mapper)
         {
             _shreddersHubRepository = shreddersHubRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public Task<List<ItemInfo>> GetItemDetails()
+        public async Task<List<ListingModel>> GetItemDetails()
         {
-            return _shreddersHubRepository.GetAll();
+            var listing = await _shreddersHubRepository.GetAll();
+            return _mapper.Map<List<ListingModel>>(listing);
         }
 
         [HttpPost]
-        public Task AddItemDetails(ItemInfo itemName)
+        public async Task AddListing(ListingModel model)
         {
-            return _shreddersHubRepository.Add(itemName);
+            var listing = _mapper.Map<Listing>(model);
+            await _shreddersHubRepository.Add(listing);
         }
     }
 }

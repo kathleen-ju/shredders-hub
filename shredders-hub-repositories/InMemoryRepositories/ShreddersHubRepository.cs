@@ -6,16 +6,16 @@ namespace shredders_hub_repositories.InMemoryRepositories;
 
 public class ShreddersHubRepository : IShreddersHubRepository
 {
-    private readonly List<ItemInfo> _items = new();
+    private readonly List<Listing> _items = new();
     
-    public Task Add(ItemInfo itemInfo)
+    public Task Add(Listing listing)
     {
         
-        _items.Add(itemInfo);
+        _items.Add(listing);
         return Task.FromResult("Success!");
     }
 
-    public Task<List<ItemInfo>> GetAll()
+    public Task<List<Listing>> GetAll()
     {
         return Task.FromResult(_items);
     }
