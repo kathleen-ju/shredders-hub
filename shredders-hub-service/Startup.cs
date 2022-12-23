@@ -1,6 +1,8 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using shredders_hub_application;
 using shredders_hub_repositories.InMemoryRepositories;
+using shredders_hub_service.HealthChecks;
 
 namespace shredders_hub_service
 {
@@ -23,6 +25,7 @@ namespace shredders_hub_service
                         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                     });
             });
+            services.AddHealthChecks();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -49,6 +52,12 @@ namespace shredders_hub_service
             
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
+
+                endpoints
+                    .MapHealthChecks("/health", new HealthCheckOptions
+                    {
+                        ResponseWriter = ResponseWriter.WriteResponse
+                    });
             });
         }
     }
