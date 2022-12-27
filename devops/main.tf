@@ -48,3 +48,7 @@ resource "aws_instance" "shredders-hub" {
   }
 }
 
+resource "aws_ecr_repository" "dotnet-users-api" {
+  name                 = var.ecr_name
+}
+

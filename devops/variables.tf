@@ -26,3 +26,8 @@ variable "ami_id" {
     description = "AMI for Ubuntu Ec2 instance" 
     default     = "ami-051a81c2bd3e755db" 
 }
+
+variable "ecr_name" {
+    description = "name of ecr"
+    default = "dotnet-user-api"
+}
