@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "key_name" { 
     description = " SSH keys to connect to ec2 instance" 
-    default     =  "dec-2022" 
+    default     =  "shredders-hub" 
 }
 
 variable "instance_type" { 
@@ -15,7 +15,7 @@ variable "instance_type" {
 
 variable "security_group" { 
     description = "Name of security group" 
-    default     = "jordan-sg-2022" 
+    default     = "shredders-hub-sg-2022" 
 }
 
 variable "tag_name" { 

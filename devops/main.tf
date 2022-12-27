@@ -7,7 +7,7 @@ resource "aws_vpc" "main" {
 }
 
 #Create security group with firewall rules
-resource "aws_security_group" "jordan-sg-2022" {
+resource "aws_security_group" "shredders-hub-sg-2022" {
   name        = var.security_group
   description = "security group for shredders-hub"
 
@@ -38,11 +38,11 @@ resource "aws_security_group" "jordan-sg-2022" {
   }
 }
 
-resource "aws_instance" "myFirstInstance" {
+resource "aws_instance" "shredders-hub" {
   ami           = var.ami_id
   key_name = var.key_name
   instance_type = var.instance_type
-  vpc_security_group_ids = [aws_security_group.jordan-sg-2022.id]
+  vpc_security_group_ids = [aws_security_group.shredders-hub-sg-2022.id]
   tags= {
     Name = var.tag_name
   }
