@@ -58,7 +58,7 @@ jobs:
       
     - name: Deploy with rsync
       run: 
-        rsync -avz ${{ env.TARGET_DIR }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:deploy
+        rsync -avz ${{ env.TARGET_DIR }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:./deploy
         
 #    - name: Deploy to Server 1
 #      uses: easingthemes/ssh-deploy@main
