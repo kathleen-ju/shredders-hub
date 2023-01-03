@@ -47,18 +47,29 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-    - name: Deploy in EC2
-      env:
-        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        HOSTNAME : ${{ secrets.HOST_DNS }}
-        USER_NAME : ${{ secrets.USERNAME }}
-      run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -tt -i private_key ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} 
+#    - name: Deploy in EC2
+#      env:
+#        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+#        HOSTNAME : ${{ secrets.HOST_DNS }}
+#        USER_NAME : ${{ secrets.USERNAME }}
+#      run: |
+#        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+#        ssh -tt -i private_key ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} 
+#        ls
+
+    - uses: actions/checkout@v2
+    - name: Set up SSH agent
+      uses: appleboy/ssh-agent@v0.2.1
+      with:
+        ssh_private_key: ${{ secrets.EC2_SSH_KEY }}
+        
+    - name: SSH into EC2
+      run: 
+        ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}
         ls
         
         
-#    - name: executing remote ssh commands using password
+        #    - name: executing remote ssh commands using password
 #      uses: appleboy/ssh-action@v0.1.6
 #      with:
 #        host: ${{ secrets.HOST_DNS }}
