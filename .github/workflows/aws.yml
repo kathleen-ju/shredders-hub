@@ -57,7 +57,7 @@ jobs:
       run: ssh-keyscan -H ${{ secrets.HOST_DNS }} >> ~/.ssh/known_hosts
       
     - name: Deploy with rsync
-      run: rsync -avz ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:${ { env.TARGET_DIR }}
+      run: rsync -avz ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:.
         
 #    - name: Deploy to Server 1
 #      uses: easingthemes/ssh-deploy@main
