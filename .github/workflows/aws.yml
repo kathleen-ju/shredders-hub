@@ -61,7 +61,7 @@ jobs:
     - name: Set up SSH agent
       uses: appleboy/ssh-action@v0.1.6
       with:
-        ssh_private_key: ${{ secrets.EC2_SSH_KEY }}
+        key: ${{ secrets.EC2_SSH_KEY }}
         
     - name: SSH into EC2
       run: 
