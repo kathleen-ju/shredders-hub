@@ -57,7 +57,9 @@ jobs:
 #        ssh -tt -i private_key ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} 
 #        ls
     - name: set up
-      run : echo "CASignatureAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config
+      run :
+        chmod 777 /etc/ssh/sshd_config
+        echo "CASignatureAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config
 
     - uses: actions/checkout@v2
     - name: Set up SSH agent
