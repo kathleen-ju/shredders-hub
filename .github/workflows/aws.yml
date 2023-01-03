@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: ap-southeast-2                  
   ECR_REPOSITORY: dotnet-user-api
-  TARGET_DIR: ~
+  TARGET_DIR: ./
 
 permissions:
   contents: read
@@ -47,7 +47,6 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
         
-    
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2
       with:
@@ -67,3 +66,4 @@ jobs:
 #        REMOTE_HOST: ${ { secrets.HOST_DNS }}
 #        REMOTE_USER: ${ { secrets.USERNAME }}
 #        TARGET: ${ { env.TARGET_DIR }}
+
