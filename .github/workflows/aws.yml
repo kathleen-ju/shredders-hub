@@ -54,7 +54,7 @@ jobs:
         USER_NAME : ${{ secrets.USERNAME  }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -tt private_key ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} 
+        ssh -tt -i private_key ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} 
         ls
         
         
