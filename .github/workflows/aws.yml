@@ -59,6 +59,17 @@ jobs:
 #    - name: set up
 #      run : sudo echo "CASignatureAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config
 
+    - name: Load private SSH key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Atomic Deploy
+      run: |
+        ssh ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} << EOF
+          whoami
+        EOF
+
     - uses: actions/checkout@v2
     - name: Set up SSH agent
       uses: appleboy/ssh-action@v0.1.6
@@ -66,7 +77,6 @@ jobs:
         host: ${{ secrets.HOST_DNS }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        debug: true
         script: ls
         
         
