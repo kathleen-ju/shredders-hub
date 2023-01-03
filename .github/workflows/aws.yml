@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: ap-southeast-2                  
   ECR_REPOSITORY: dotnet-user-api
-  TARGET_DIR: ~
+  TARGET_DIR: ./
 
 permissions:
   contents: read
@@ -57,7 +57,7 @@ jobs:
       run: ssh-keyscan -H ${{ secrets.HOST_DNS }} >> ~/.ssh/known_hosts
       
     - name: Deploy with rsync
-      run: rsync -avz ${ { env.TARGET_DIR }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:.
+      run: rsync -avz ${ { env.TARGET_DIR }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:./
         
 #    - name: Deploy to Server 1
 #      uses: easingthemes/ssh-deploy@main
