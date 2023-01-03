@@ -33,20 +33,28 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-#    - name: Build, tag, and push image to Amazon ECR
-#      id: build-image
-#      env:
-#        ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
-#        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#        IMAGE_TAG: ${{ github.sha }}${{ github.run_attempt }}
-#      run: |
-#        # Build a docker container and
-#        # push it to ECR so that it can
-#        # be deployed to ECS.
-#        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-#        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-#        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}${{ github.run_attempt }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        REMOTE_HOST: ${{ secrets.HOST_DNS }}
+        REMOTE_USER: ${{ secrets.USERNAME }}
+        TARGET: ${{ env.TARGET_DIR }}
+        
 #    - name: Deploy in EC2
 #      env:
 #        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
@@ -59,31 +67,31 @@ jobs:
 #    - name: set up
 #      run : sudo echo "CASignatureAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config
 
-    - name: Load private SSH key
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
-    - name: Atomic Deploy
-      run: |
-        ssh ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} << EOF
-          whoami
-        EOF
-
-    - uses: actions/checkout@v2
-    - name: Set up SSH agent
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.HOST_DNS }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: ls
-        
-        
-    - name: SSH into EC2
-      run: 
-        ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}
-        ls
+#    - name: Load private SSH key
+#      uses: webfactory/ssh-agent@v0.5.3
+#      with:
+#        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+#
+#    - name: Atomic Deploy
+#      run: |
+#        ssh ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} << EOF
+#          whoami
+#        EOF
+#
+#    - uses: actions/checkout@v2
+#    - name: Set up SSH agent
+#      uses: appleboy/ssh-action@v0.1.6
+#      with:
+#        host: ${{ secrets.HOST_DNS }}
+#        username: ${{ secrets.USERNAME }}
+#        key: ${{ secrets.EC2_SSH_KEY }}
+#        script: ls
+#        
+#        
+#    - name: SSH into EC2
+#      run: 
+#        ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}
+#        ls
         
         
         #    - name: executing remote ssh commands using password
