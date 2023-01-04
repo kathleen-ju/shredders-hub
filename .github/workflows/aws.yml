@@ -52,11 +52,11 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
           whoami
-          docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+#          docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           ls -al
 #          docker run 
         
