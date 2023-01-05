@@ -57,7 +57,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         run: |
-          ls 
-#          docker pull ${ECR_REGISTRY}/${{ env.ECR_REPOSITORY }}:${IMAGE_TAG}
-#          docker run --rm -p 5000:5000 -p 5001:5001 -e ASPNETCORE_HTTP_PORT=https://+5001 -e ASPNETCORE_URLS=http://+:5000 $${ECR_REGISTRY}/${{ env.ECR_REPOSITORY }}:${IMAGE_TAG}
+          echo "here"
+          aws ecr get-login-password --region ${{ env.AWS_REGION}} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+          docker pull ${ECR_REGISTRY}/${{ env.ECR_REPOSITORY }}:${IMAGE_TAG}
+          docker run --rm -p 5000:5000 -p 5001:5001 -e ASPNETCORE_HTTP_PORT=https://+5001 -e ASPNETCORE_URLS=http://+:5000 $${ECR_REGISTRY}/${{ env.ECR_REPOSITORY }}:${IMAGE_TAG}
           
