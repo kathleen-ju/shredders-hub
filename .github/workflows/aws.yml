@@ -46,7 +46,7 @@ jobs:
         docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-    - name: Executing remote ssh commands using ssh key
+    - name: Run docker image on server
       uses: appleboy/ssh-action@v0.1.6
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -58,3 +58,5 @@ jobs:
         port: 22
         run: |
           docker pull ${ECR_REGISTRY}/${{ env.ECR_REPOSITORY }}:${IMAGE_TAG}
+          docker run --rm -p 5000:5000 -p 5001:5001 -e ASPNETCORE_HTTP_PORT=https://+5001 -e ASPNETCORE_URLS=http://+:5000 $${ECR_REGISTRY}/${{ env.ECR_REPOSITORY }}:${IMAGE_TAG}
+          
