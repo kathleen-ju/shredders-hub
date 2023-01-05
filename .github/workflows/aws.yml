@@ -8,6 +8,8 @@ env:
   AWS_REGION: ap-southeast-2                  
   ECR_REPOSITORY: dotnet-user-api
   TARGET_DIR: ./
+  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  IMAGE_TAG: ${{ github.sha }}${{ github.run_attempt }}
 
 permissions:
   contents: read
@@ -33,19 +35,15 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-#    - name: Build, tag, and push image to Amazon ECR
-#      id: build-image
-#      env:
-#        ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
-#        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#        IMAGE_TAG: ${{ github.sha }}${{ github.run_attempt }}
-#      run: |
-#        # Build a docker container and
-#        # push it to ECR so that it can
-#        # be deployed to ECS.
-#        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-#        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-#        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG}} .
+        docker push {{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG}}
+        echo "image={{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG}}" >> $GITHUB_OUTPUT
 
     - name: Executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
@@ -55,99 +53,4 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          echo "ughhhh"
-#          docker run 
-        
-#    - name: Deploy to Server
-#      uses: easingthemes/ssh-deploy@main
-#      env:
-#        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#        REMOTE_HOST: ${{ secrets.HOST_DNS }}
-#        REMOTE_USER: ${{ secrets.USERNAME }}
-#        TARGET: ${{ env.TARGET_DIR }}
-        
-#    - name: Deploy in EC2
-#      env:
-#        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-#        HOSTNAME : ${{ secrets.HOST_DNS }}
-#        USER_NAME : ${{ secrets.USERNAME }}
-#      run: |
-#        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-#        ssh -tt -i private_key ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} 
-#        ls
-#    - name: set up
-#      run : sudo echo "CASignatureAlgorithms +ssh-rsa" >> /etc/ssh/sshd_config
-
-#    - name: Load private SSH key
-#      uses: webfactory/ssh-agent@v0.5.3
-#      with:
-#        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-#
-#    - name: Atomic Deploy
-#      run: |
-#        ssh ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} << EOF
-#          whoami
-#        EOF
-#
-#    - uses: actions/checkout@v2
-#    - name: Set up SSH agent
-#      uses: appleboy/ssh-action@v0.1.6
-#      with:
-#        host: ${{ secrets.HOST_DNS }}
-#        username: ${{ secrets.USERNAME }}
-#        key: ${{ secrets.EC2_SSH_KEY }}
-#        script: ls
-#        
-#        
-#    - name: SSH into EC2
-#      run: 
-#        ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}
-#        ls
-
-        
-        #    - name: executing remote ssh commands using password
-#      uses: appleboy/ssh-action@v0.1.6
-#      with:
-#        host: ${{ secrets.HOST_DNS }}
-#        username: ${{ secrets.USERNAME }}
-#        password: ${{ secrets.PASSWORD }}
-#        port: ${{ secrets.PORT }}
-#        script: whoami
-
-#    - name: Install SSH key
-#      uses: shimataro/ssh-key-action@v2
-#      with:
-#        key: ${{ secrets.EC2_SSH_KEY }}
-#        name: id_rsa # optional
-#        known_hosts: ${{ secrets.HOST_DNS }}
-#        if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
-#        
-#    - name: rsync over SSH
-#      run: rsync -r ${{ env.TARGET_DIR }} ${{ secrets.USERNAME }}@{{ secrets.HOST_DNS }}:.
-        
-#    - name: Install SSH Key
-#      uses: shimataro/ssh-key-action@v2
-#      with:
-#        key: ${{ secrets.EC2_SSH_KEY }}
-#        known_hosts: ${ { secrets.HOST_DNS }}
-#
-#    - name: Adding Known Hosts
-#      run: ssh-keyscan -H ${{ secrets.HOST_DNS }} >> ~/.ssh/known_hosts
-#
-#    - name: ssh into machine
-#      run: 
-#        ssh -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}
-#        ls
-#        
-#    - name: Deploy with rsync
-#      run: 
-#        rsync -avz ${{ env.TARGET_DIR }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:/home/ec2-user/deploy
-        
-#    - name: Deploy to Server 1
-#      uses: easingthemes/ssh-deploy@main
-#      env:
-#        SSH_PRIVATE_KEY: ${ { secrets.EC2_SSH_KEY }}
-#        REMOTE_HOST: ${ { secrets.HOST_DNS }}
-#        REMOTE_USER: ${ { secrets.USERNAME }}
-#        TARGET: ${ { env.TARGET_DIR }}
-
+          docker pull {{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG}}
