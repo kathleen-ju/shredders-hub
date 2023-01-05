@@ -56,7 +56,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
-        run: |
+        script: |
           whoami
           aws ecr get-login-password --region ${{ env.AWS_REGION}} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
           docker pull ${ECR_REGISTRY}/${{ env.ECR_REPOSITORY }}:${IMAGE_TAG}
