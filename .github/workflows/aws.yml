@@ -55,9 +55,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          whoami
-          ls -al
-#          docker pull
+          docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 #          docker run 
         
 #    - name: Deploy to Server
