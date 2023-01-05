@@ -55,7 +55,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          ls
+          echo "ughhhh"
 #          docker run 
         
 #    - name: Deploy to Server
