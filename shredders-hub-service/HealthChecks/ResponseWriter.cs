@@ -21,7 +21,7 @@ public static class ResponseWriter
             {
                 writer.WriteStartObject();
                 writer.WriteString("status", result.Status.ToString());
-                writer.WriteStartObject("resultsk");
+                writer.WriteStartObject("results");
                 foreach (var entry in result.Entries)
                 {
                     writer.WriteStartObject(entry.Key);
