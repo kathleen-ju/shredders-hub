@@ -33,7 +33,7 @@ jobs:
         
   deploy:
     name: Deploy
-    if: success()
+    needs: [ 'test' ]
     runs-on: ubuntu-latest
     environment: production
     steps:
