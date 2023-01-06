@@ -35,6 +35,5 @@ public class ListingsControllerTests
         var result = await _controller.GetItemDetails();
         
         Assert.Equal(_listingModel, result.First());
-        Assert.Equal(1,2); // failing for pipeline test
     }
 }
