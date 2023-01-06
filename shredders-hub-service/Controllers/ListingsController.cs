@@ -6,15 +6,15 @@ using shredders_hub_service.models.contracts;
 
 namespace shredders_hub_service.Controllers
 {
-    [Route("items-swap")]
+    [Route("listings")]
     [ApiController]
 
-    public class ItemsSwapController
+    public class ListingsController
     {
         private readonly IShreddersHubRepository _shreddersHubRepository;
         private readonly IMapper _mapper;
 
-        public ItemsSwapController(IShreddersHubRepository shreddersHubRepository, IMapper mapper)
+        public ListingsController(IShreddersHubRepository shreddersHubRepository, IMapper mapper)
         {
             _shreddersHubRepository = shreddersHubRepository;
             _mapper = mapper;
