@@ -25,9 +25,9 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore --no-color
+        run: dotnet restore -v=q
       - name: Build
-        run: dotnet build --configuration Release --no-restore --no-color
+        run: dotnet build --configuration Release --no-restore -v=q
       - name: Test
         run: dotnet test --no-restore --verbosity normal
         
