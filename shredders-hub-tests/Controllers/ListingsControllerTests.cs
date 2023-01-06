@@ -36,4 +36,10 @@ public class ListingsControllerTests
         
         Assert.Equal(_listingModel, result.First());
     }
+    
+    [Fact]
+    public void intentionally_failing()
+    {
+        Assert.Equal(1, 2);
+    }
 }

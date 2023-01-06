@@ -32,6 +32,12 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      
+    - name: run tests
+      run:
+        dotnet restore
+        dotnet build --configuration Release && dotnet test
+      if: failure()
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -45,6 +51,7 @@ jobs:
         docker build -t $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG .
         docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      if: success()
 
     - name: Run docker image on server
       uses: appleboy/ssh-action@v0.1.6
@@ -62,4 +69,5 @@ jobs:
           aws ecr get-login-password --region ${{ env.AWS_REGION}} | docker login --username AWS --password-stdin $ECR_REGISTRY
           docker pull $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
           docker run --rm -d -p 5000:5000 -p 5001:5001 -e ASPNETCORE_HTTP_PORT=https://+5001 -e ASPNETCORE_URLS=http://+:5000 $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
+      if: success()
           
