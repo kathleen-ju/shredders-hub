@@ -25,11 +25,11 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore -v=q
+        run: dotnet restore 
       - name: Build
-        run: dotnet build --configuration Release --no-restore -v=q
+        run: dotnet build --configuration Release --no-restore 
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test --no-restore --verbosity normal --logger:"console;verbosity=normal"
         
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
