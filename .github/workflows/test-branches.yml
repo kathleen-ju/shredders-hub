@@ -2,7 +2,7 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "run-tests-on-pipeline" ]
+    branches: [ "!main" ]
 
 permissions:
   contents: read
