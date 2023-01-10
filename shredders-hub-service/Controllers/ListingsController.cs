@@ -32,6 +32,8 @@ namespace shredders_hub_service.Controllers
         {
             var listing = _mapper.Map<Listing>(model);
             await _shreddersHubRepository.Add(listing);
+            
+            
         }
     }
 }
