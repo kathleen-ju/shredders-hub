@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shredders-hub-repositories"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shredders-hub-application", "shredders-hub-application\shredders-hub-application.csproj", "{302E910F-9CA6-4529-9986-1544770D63C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shredders-hub-service-tests", "shredders-hub-service-tests\shredders-hub-service-tests.csproj", "{536DA5A0-F7C6-4169-AA93-15CA548A5A65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shredders-hub-tests", "shredders-hub-tests\shredders-hub-tests.csproj", "{1441189C-372D-4D6B-904C-CF40AB28E8C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +26,9 @@ Global
 		{302E910F-9CA6-4529-9986-1544770D63C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{302E910F-9CA6-4529-9986-1544770D63C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{302E910F-9CA6-4529-9986-1544770D63C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{536DA5A0-F7C6-4169-AA93-15CA548A5A65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{536DA5A0-F7C6-4169-AA93-15CA548A5A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{536DA5A0-F7C6-4169-AA93-15CA548A5A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{536DA5A0-F7C6-4169-AA93-15CA548A5A65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1441189C-372D-4D6B-904C-CF40AB28E8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1441189C-372D-4D6B-904C-CF40AB28E8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1441189C-372D-4D6B-904C-CF40AB28E8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1441189C-372D-4D6B-904C-CF40AB28E8C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
